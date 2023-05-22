@@ -1,4 +1,4 @@
-# Plugin LEOADD - Wordpress
+# Wordpress Plugin LEOADD
 
 full list of  sections and features.
 
