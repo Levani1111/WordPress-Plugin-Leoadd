@@ -1,0 +1,19 @@
+{
+    "name": "levanipapashvili/leoadd",
+    "description": "leoadd plugin",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Levani1111",
+            "email": "papashvililevani@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Inc\\": "./inc"
+        }
+    }
+}
