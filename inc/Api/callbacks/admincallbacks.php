@@ -30,15 +30,15 @@ class admincallbacks extends basecontroller
         return require_once("$this->plugin_path/templates/widget.php");
     }
 
-    public function leoadd_options_group($input)
-    {
-        return $input;
-    }
+    // public function leoadd_options_group($input)
+    // {
+    //     return $input;
+    // }
 
-    public function leoadd_admin_section()
-    {
-        echo 'Check this beautiful section!';
-    }
+    // public function leoadd_admin_section()
+    // {
+    //     echo 'Check this beautiful section!';
+    // }
 
     public function leoadd_text_example()
     {
