@@ -16,7 +16,7 @@ full list of  sections and features.
 
 ## Installation
 
-- clone the repo 
+- clone the repo. 
 - inside wp-content/plugins/leoadd.
 - install composer and run composer install.
 - install npm and run npm install.
