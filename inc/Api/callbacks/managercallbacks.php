@@ -14,8 +14,11 @@ class managercallbacks extends basecontroller
     public function checkbox_sanitize($input)
     {
         // sanitize checkbox
-        // return filter_var($input, FILTER_SANITIZE_NUMBER_INT);
-        return (isset($input) ? true : false);
+        $output = array();
+        foreach ($this->managers as $key => $value) {
+            $output[$key] = isset($input[$key]) ? true : false;
+        }
+        return $output;
     }
 
     public function admin_section_manager()
@@ -26,8 +29,10 @@ class managercallbacks extends basecontroller
     public function checkbox_field($args)
     {
         $name = $args['label_for'];
-		$classes = $args['class'];
-		$checkbox = get_option( $name );
-		echo '<div class="' . $classes . '"><input type="checkbox" id="' . $name . '" name="' . $name . '" value="1" class="" ' . ($checkbox ? 'checked' : '') . '><label for="' . $name . '"><div></div></label></div>';
+        $classes = $args['class'];
+        $option_name = $args['option_name'];
+        $checkbox = get_option($option_name);
+        echo '<div class="' . $classes . '"><input type="checkbox" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="1" class="" ' . (is_array($checkbox) && isset($checkbox[$name]) && $checkbox[$name] ? 'checked' : '') . '><label for="' . $name . '"><div></div></label></div>';
+        
     }
 }

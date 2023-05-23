@@ -82,14 +82,13 @@ class admin extends basecontroller
     public function set_settings()
     {
 
-        $args = array();
-        foreach ($this->managers as $key => $value) {
-            $args[] = array(
+        $args = array(
+            array(
                 'option_group' => 'leoadd_plugin_settings',
-                'option_name' => $key,
+                'option_name' => 'leoadd_plugin',
                 'callback' => array($this->callbacks_manager, 'checkbox_sanitize')
-            );
-        }
+            )
+        );
 
         $this->settings->set_settings($args);
     }
@@ -119,6 +118,7 @@ class admin extends basecontroller
                 'page' => 'leoadd_plugin',
                 'section' => 'leoadd_admin_index',
                 'args' => array(
+                    'option_name' => 'leoadd_plugin',
                     'label_for' => $key,
                     'class' => 'ui-toggle'
                 )
