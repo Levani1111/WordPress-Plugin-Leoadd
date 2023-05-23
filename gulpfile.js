@@ -2,7 +2,6 @@
 var gulp = require('gulp');
 
 // CSS related plugins
-var sass = require('gulp-sass');
 var sass = require('gulp-sass')(require('sass'));
 var autoprefixer = require('gulp-autoprefixer');
 var minifycss = require('gulp-uglifycss');
@@ -19,11 +18,9 @@ var stripDebug = require('gulp-strip-debug');
 
 // Utility plugins
 var rename = require('gulp-rename');
-var sourcemaps = require('gulp-sourcemaps');
 var notify = require('gulp-notify');
 var plumber = require('gulp-plumber');
 var options = require('gulp-options');
-var gulpif = require('gulp-if');
 
 // Browers related plugins
 var browserSync = require('browser-sync').create();
@@ -86,27 +83,17 @@ gulp.task('js', function () {
   );
 });
 
-
-function triggerPlumber(src, url) {
-  return gulp.src(src).pipe(plumber()).pipe(gulp.dest(url));
-}
-
-gulp.task(
-  'default',
-  gulp.series('styles', 'js', function (done) {
-    gulp
-      .src(jsURL + 'script.min.js')
-      .pipe(notify({ message: 'Assets Compiled!' }));
-    done();
-  })
-);
+gulp.task('default', gulp.series('styles', 'js', function (done) {
+  gulp.src(jsURL + 'script.min.js')
+    .pipe(notify({ message: 'Assets Compiled!' }));
+  done();
+}));
 
 gulp.task('watch', function () {
   gulp.watch(phpWatch, reload);
   gulp.watch(styleWatch, gulp.series('styles'));
   gulp.watch(jsWatch, gulp.series('js', reload));
-  gulp
-    .src(jsURL + 'script.min.js')
+  gulp.src(jsURL + 'script.min.js')
     .pipe(notify({ message: 'Gulp is Watching, Happy Coding!' }));
 });
 
