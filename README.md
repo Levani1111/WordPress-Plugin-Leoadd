@@ -18,6 +18,6 @@ full list of  sections and features.
 
 - clone the repo. 
 - inside wp-content/plugins/leoadd.
-- install composer and run composer install.
-- install npm and run npm install.
-- run gulp watch to compile sass and js files and watch for changes.
+- install composer and run `composer install`.
+- install npm and run `npm install`.
+- run `gulp watch` to compile sass and js files and watch for changes.
