@@ -11,13 +11,13 @@ use \Inc\base\basecontroller;
 use \Inc\Api\callbacks\admincallbacks;
 use \Inc\Api\callbacks\managercallbacks;
 
-class admin extends basecontroller
+class dashboard extends basecontroller
 {
     public $settings;
     public $callbacks;
     public $callbacks_manager;
     public $pages = array();
-    public $subpages = array();
+    // public $subpages = array();
 
 
     public function register()
@@ -26,11 +26,11 @@ class admin extends basecontroller
         $this->callbacks = new admincallbacks();
         $this->callbacks_manager = new managercallbacks();
         $this->set_pages();
-        $this->set_subpages();
+        // $this->set_subpages();
         $this->set_settings();
         $this->set_sections();
         $this->set_fields();
-        $this->settings->add_pages($this->pages)->with_sub_page('Dashboard')->add_sub_pages($this->subpages)->register();
+        $this->settings->add_pages($this->pages)->with_sub_page('Dashboard')->register();
     }
 
     public function set_pages()
@@ -48,36 +48,36 @@ class admin extends basecontroller
         );
     }
 
-    public function set_subpages()
-    {
+    // public function set_subpages()
+    // {
 
-        $this->subpages = array(
-            array(
-                'parent_slug' => 'leoadd_plugin',
-                'page_title' => 'Custom Post Types',
-                'menu_title' => 'CPT',
-                'capability' => 'manage_options',
-                'menu_slug' => 'leoadd_cpt',
-                'callback' => array($this->callbacks, 'admin_cpt'),
-            ),
-            array(
-                'parent_slug' => 'leoadd_plugin',
-                'page_title' => 'Custom Taxonomies',
-                'menu_title' => 'Taxonomies',
-                'capability' => 'manage_options',
-                'menu_slug' => 'leoadd_taxonomies',
-                'callback' => array($this->callbacks, 'admin_taxonomies'),
-            ),
-            array(
-                'parent_slug' => 'leoadd_plugin',
-                'page_title' => 'Custom Widgets',
-                'menu_title' => 'Widgets',
-                'capability' => 'manage_options',
-                'menu_slug' => 'leoadd_widgets',
-                'callback' => array($this->callbacks, 'admin_widgets'),
-            ),
-        );
-    }
+    //     $this->subpages = array(
+    //         array(
+    //             'parent_slug' => 'leoadd_plugin',
+    //             'page_title' => 'Custom Post Types',
+    //             'menu_title' => 'CPT',
+    //             'capability' => 'manage_options',
+    //             'menu_slug' => 'leoadd_cpt',
+    //             'callback' => array($this->callbacks, 'admin_cpt'),
+    //         ),
+    //         array(
+    //             'parent_slug' => 'leoadd_plugin',
+    //             'page_title' => 'Custom Taxonomies',
+    //             'menu_title' => 'Taxonomies',
+    //             'capability' => 'manage_options',
+    //             'menu_slug' => 'leoadd_taxonomies',
+    //             'callback' => array($this->callbacks, 'admin_taxonomies'),
+    //         ),
+    //         array(
+    //             'parent_slug' => 'leoadd_plugin',
+    //             'page_title' => 'Custom Widgets',
+    //             'menu_title' => 'Widgets',
+    //             'capability' => 'manage_options',
+    //             'menu_slug' => 'leoadd_widgets',
+    //             'callback' => array($this->callbacks, 'admin_widgets'),
+    //         ),
+    //     );
+    // }
 
     public function set_settings()
     {
