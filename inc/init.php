@@ -21,6 +21,7 @@ final class init
             base\enqueue::class,
             base\settingslinks::class,
             base\customposttypecontroller::class,
+            base\customtaxonomycontroller::class,
         ];
     }
 
