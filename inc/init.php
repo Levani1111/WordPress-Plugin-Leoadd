@@ -22,6 +22,7 @@ final class init
             base\settingslinks::class,
             base\customposttypecontroller::class,
             base\customtaxonomycontroller::class,
+            base\widgetcontroller::class,
         ];
     }
 

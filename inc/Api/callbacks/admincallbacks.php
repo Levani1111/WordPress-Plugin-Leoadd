@@ -29,6 +29,11 @@ class admincallbacks extends basecontroller
     {
         return require_once("$this->plugin_path/templates/widget.php");
     }
+    
+    public function admin_chat()
+	{
+		echo "<h1>Chat Manager</h1>";
+	}
 
     // public function leoadd_options_group($input)
     // {

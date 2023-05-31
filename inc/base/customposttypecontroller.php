@@ -12,7 +12,7 @@ use \Inc\Api\callbacks\admincallbacks;
 
 class customposttypecontroller extends basecontroller
 {
-    // public $settings;
+    public $settings;
     public $callbacks;
 
     public $subpages = array();

@@ -13,7 +13,7 @@ use \Inc\Api\callbacks\admincallbacks;
 /**
 * 
 */
-class customtaxonomycontroller extends basecontroller
+class widgetcontroller extends basecontroller
 {
 
     public $settings;
@@ -23,7 +23,7 @@ class customtaxonomycontroller extends basecontroller
 
 	public function register()
 	{
-		if ( ! $this->activated( 'taxonomy_manager' ) ) return;
+		if ( ! $this->activated( 'chat_manager' ) ) return;
 
 		$this->settings = new settingsapi();
 
@@ -35,17 +35,17 @@ class customtaxonomycontroller extends basecontroller
 
 	}
 
-	public function set_subpages()
-	{
-		$this->subpages = array(
+    public function set_subpages()
+    {
+        $this->subpages = array(
             array(
                 'parent_slug' => 'leoadd_plugin',
-                'page_title' => 'Custom Taxonomies',
-                'menu_title' => 'Taxonomy Manager',
+                'page_title' => 'Chat Manager',
+                'menu_title' => 'Chat Manager',
                 'capability' => 'manage_options',
-                'menu_slug' => 'leoadd_taxonomy',
-                'callback' => array($this->callbacks, 'admin_taxonomies'),
+                'menu_slug' => 'leoadd_chat',
+                'callback' => array($this->callbacks, 'admin_chat'),
             )
-		);
-	}
+        );
+    }
 }
