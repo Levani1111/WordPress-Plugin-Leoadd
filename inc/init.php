@@ -23,6 +23,7 @@ final class init
             base\customposttypecontroller::class,
             base\customtaxonomycontroller::class,
             base\widgetcontroller::class,
+            base\gallerycontroller::class,
         ];
     }
 

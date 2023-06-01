@@ -29,6 +29,11 @@ class admincallbacks extends basecontroller
     {
         return require_once("$this->plugin_path/templates/widget.php");
     }
+
+    public function admin_gallery()
+	{
+		echo "<h1>Gallery Manager</h1>";
+	}
     
     public function admin_chat()
 	{
