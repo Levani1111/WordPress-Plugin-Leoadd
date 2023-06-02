@@ -40,6 +40,11 @@ class admincallbacks extends basecontroller
 		echo "<h1>Chat Manager</h1>";
 	}
 
+    public function admin_membership()
+	{
+		echo "<h1>Membership Manager</h1>";
+	}
+
     // public function leoadd_options_group($input)
     // {
     //     return $input;

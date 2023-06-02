@@ -24,6 +24,7 @@ final class init
             base\customtaxonomycontroller::class,
             base\widgetcontroller::class,
             base\gallerycontroller::class,
+            base\membershipcontroller::class,
         ];
     }
 
