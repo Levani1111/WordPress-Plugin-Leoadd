@@ -45,6 +45,11 @@ class admincallbacks extends basecontroller
 		echo "<h1>Membership Manager</h1>";
 	}
 
+    public function admin_testimonial()
+	{
+		echo "<h1>Testimonial Manager</h1>";
+	}
+
     // public function leoadd_options_group($input)
     // {
     //     return $input;

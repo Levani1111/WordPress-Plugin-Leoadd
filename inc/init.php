@@ -25,6 +25,7 @@ final class init
             base\widgetcontroller::class,
             base\gallerycontroller::class,
             base\membershipcontroller::class,
+            base\testimonialcontroller::class,
         ];
     }
 
