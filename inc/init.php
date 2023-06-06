@@ -26,6 +26,7 @@ final class init
             base\gallerycontroller::class,
             base\membershipcontroller::class,
             base\testimonialcontroller::class,
+            base\templatecontroller::class,
         ];
     }
 
