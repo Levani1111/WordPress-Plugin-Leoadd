@@ -27,6 +27,7 @@ final class init
             base\membershipcontroller::class,
             base\testimonialcontroller::class,
             base\templatecontroller::class,
+            base\chatcontroller::class,
         ];
     }
 
