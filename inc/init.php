@@ -28,6 +28,8 @@ final class init
             base\testimonialcontroller::class,
             base\templatecontroller::class,
             base\chatcontroller::class,
+            base\authcontroller::class,
+         
         ];
     }
 

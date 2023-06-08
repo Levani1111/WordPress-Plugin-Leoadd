@@ -54,6 +54,12 @@ class admincallbacks extends basecontroller
     {
         echo "<h1>Templates Manager</h1>";
     }
+
+    public function admin_auth()
+    {
+        echo "<h1>Authentication Manager</h1>";
+        // echo "<h1>Templates Manager</h1>";
+    }
     // public function leoadd_options_group($input)
     // {
     //     return $input;
