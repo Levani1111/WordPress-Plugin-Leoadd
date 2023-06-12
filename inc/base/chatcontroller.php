@@ -23,7 +23,7 @@ class chatcontroller extends basecontroller
 
 	public function register()
 	{
-		if ( ! $this->activated( 'media_widget' ) ) return;
+		if ( ! $this->activated( 'chat_manager' ) ) return;
 
 		$this->settings = new settingsapi();
 
@@ -35,13 +35,13 @@ class chatcontroller extends basecontroller
 
 	}
 
-	public function set_subpages()
+    public function set_subpages()
     {
         $this->subpages = array(
             array(
                 'parent_slug' => 'leoadd_plugin',
-                'page_title' => 'Chat',
-                'menu_title' => 'Chat',
+                'page_title' => 'Chat Manager',
+                'menu_title' => 'Chat Manager',
                 'capability' => 'manage_options',
                 'menu_slug' => 'leoadd_chat',
                 'callback' => array($this->callbacks, 'admin_chat'),
