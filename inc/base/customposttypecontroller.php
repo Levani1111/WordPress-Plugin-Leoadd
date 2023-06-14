@@ -8,16 +8,21 @@ namespace Inc\base;
 
 use \Inc\Api\settingsapi;
 use \Inc\base\basecontroller;
+use \Inc\Api\callbacks\cptcallbacks;
 use \Inc\Api\callbacks\admincallbacks;
+
 
 class customposttypecontroller extends basecontroller
 {
     public $settings;
+
     public $callbacks;
-    public $custom_post_types = array();
+
     public $cpt_callbacks;
 
     public $subpages = array();
+
+    public $custom_post_types = array();
 
     public function register()
     {
@@ -28,10 +33,16 @@ class customposttypecontroller extends basecontroller
 
         $this->callbacks = new admincallbacks();
 
+        $this->cpt_callbacks = new cptcallbacks();
+
         $this->set_subpages();
 
-        $this->settings->add_sub_pages($this->subpages)->register();
+        // $this->settings->add_sub_pages($this->subpages)->register();
 
+        $this->set_settings();
+        $this->set_sections();
+        $this->set_fields();
+        $this->settings->add_sub_pages($this->subpages)->register();
         $this->store_custom_post_types();
 
         if ( ! empty($this->custom_post_types) ) {
@@ -54,60 +65,166 @@ class customposttypecontroller extends basecontroller
         );
     }
 
+    public function set_settings()
+    {
+
+        $args = array(
+            array(
+                'option_group' => 'leoadd_plugin_cpt_settings',
+                'option_name' => 'leoadd_plugin_cpt',
+                'callback' => array($this->cpt_callbacks, 'cpt_sanitize')
+            ),
+        );
+
+        $this->settings->set_settings($args);
+    }
+
+    public function set_sections()
+    {
+        $args = array(
+            array(
+                'id' => 'leoadd_cpt_index',
+                'title' => 'Custom Post Type Manager',
+                'callback' => array($this->cpt_callbacks, 'cpt_section_manager'),
+                'page' => 'leoadd_cpt'
+            )
+        );
+
+        $this->settings->set_sections($args);
+    }
+
+    public function set_fields()
+    {
+        $args = array(
+            array(
+                'id' => 'post_type',
+                'title' => 'Custom Post Type ID',
+                'callback' => array($this->cpt_callbacks, 'text_field'),
+                'page' => 'leoadd_cpt',
+                'section' => 'leoadd_cpt_index',
+                'args' => array(
+                    'option_name' => 'leoadd_plugin_cpt',
+                    'label_for' => 'post_type',
+                    'placeholder' => 'eg. product',
+                    // 'array' => 'post_type'
+                )
+            ),
+            array(
+                'id' => 'singular_name',
+                'title' => 'Singular Name',
+                'callback' => array($this->cpt_callbacks, 'text_field'),
+                'page' => 'leoadd_cpt',
+                'section' => 'leoadd_cpt_index',
+                'args' => array(
+                    'option_name' => 'leoadd_plugin_cpt',
+                    'label_for' => 'singular_name',
+                    'placeholder' => 'eg. Product',
+                    // 'array' => 'post_type'
+                )
+            ),
+            array(
+                'id' => 'plural_name',
+                'title' => 'Plural Name',
+                'callback' => array($this->cpt_callbacks, 'text_field'),
+                'page' => 'leoadd_cpt',
+                'section' => 'leoadd_cpt_index',
+                'args' => array(
+                    'option_name' => 'leoadd_plugin_cpt',
+                    'label_for' => 'plural_name',
+                    'placeholder' => 'eg. Products',
+                    // 'array' => 'post_type'
+                )
+            ),
+            array(
+                'id' => 'public',
+                'title' => 'Public',
+                'callback' => array($this->cpt_callbacks, 'checkbox_field'),
+                'page' => 'leoadd_cpt',
+                'section' => 'leoadd_cpt_index',
+                'args' => array(
+                    'option_name' => 'leoadd_plugin_cpt',
+                    'label_for' => 'public',
+                    'class' => 'ui-toggle',
+                    // 'array' => 'post_type'
+                )
+            ),
+            array(
+                'id' => 'has_archive',
+                'title' => 'Archive',
+                'callback' => array($this->cpt_callbacks, 'checkbox_field'),
+                'page' => 'leoadd_cpt',
+                'section' => 'leoadd_cpt_index',
+                'args' => array(
+                    'option_name' => 'leoadd_plugin_cpt',
+                    'label_for' => 'has_archive',
+                    'class' => 'ui-toggle',
+                    // 'array' => 'post_type'
+                )
+            ),
+        );
+      
+
+        $this->settings->set_fields($args);
+    }
+
     public function store_custom_post_types()
     {
-        $this->custom_post_types[] = array(
-			'post_type'             => 'test',
-			'name'                  => '',
-			'singular_name'         => '',
-			'menu_name'             => '',
-			'name_admin_bar'        => '',
-			'archives'              => '',
-			'attributes'            => '',
-			'parent_item_colon'     => '',
-			'all_items'             => '',
-			'add_new_item'          => '',
-			'add_new'               => '',
-			'new_item'              => '',
-			'edit_item'             => '',
-			'update_item'           => '',
-			'view_item'             => '',
-			'view_items'            => '',
-			'search_items'          => '',
-			'not_found'             => '',
-			'not_found_in_trash'    => '',
-			'featured_image'        => '',
-			'set_featured_image'    => '',
-			'remove_featured_image' => '',
-			'use_featured_image'    => '',
-			'insert_into_item'      => '',
-			'uploaded_to_this_item' => '',
-			'items_list'            => '',
-			'items_list_navigation' => '',
-			'filter_items_list'     => '',
-			'label'                 => '',
-			'description'           => '',
-			'supports'              => false,
-			'taxonomies'            => array(),
-			'hierarchical'          => false,
-			'public'                => true,
-			'show_ui'               => true,
-			'show_in_menu'          => true,
-			'menu_position'         => 5,
-			'show_in_admin_bar'     => true,
-			'show_in_nav_menus'     => true,
-			'can_export'            => true,
-			'has_archive'           => true,
-			'exclude_from_search'   => false,
-			'publicly_queryable'    => true,
-			'capability_type'       => 'page'
-		);
+        $options = get_option('leoadd_plugin_cpt');
+        // foreach ($options as $option) {
+            $this->custom_post_types[] = array(
+                'post_type'             => $options['post_type'],
+                'name'                  => $options['plural_name'],
+                'singular_name'         => $options['singular_name'],
+                'menu_name'             => $options['plural_name'],
+                'name_admin_bar'        => $options['singular_name'],
+                'archives'              => $options['singular_name'] . ' Archives',
+                'attributes'            => $options['singular_name'] . ' Attributes',
+                'parent_item_colon'     => 'Parent ' . $options['singular_name'],
+                'all_items'             => 'All ' . $options['plural_name'],
+                'add_new_item'          => 'Add New ' . $options['singular_name'],
+                'add_new'               => 'Add New',
+                'new_item'              => 'New ' . $options['singular_name'],
+                'edit_item'             => 'Edit ' . $options['singular_name'],
+                'update_item'           => 'Update ' . $options['singular_name'],
+                'view_item'             => 'View ' . $options['singular_name'],
+                'view_items'            => 'View ' . $options['plural_name'],
+                'search_items'          => 'Search ' . $options['plural_name'],
+                'not_found'             => 'No ' . $options['singular_name'] . ' Found',
+                'not_found_in_trash'    => 'No ' . $options['singular_name'] . ' Found in Trash',
+                'featured_image'        => 'Featured Image',
+                'set_featured_image'    => 'Set Featured Image',
+                'remove_featured_image' => 'Remove Featured Image',
+                'use_featured_image'    => 'Use Featured Image',
+                'insert_into_item'      => 'Insert into ' . $options['singular_name'],
+                'uploaded_to_this_item' => 'Uploaded to this ' . $options['singular_name'],
+                'items_list'            => $options['plural_name'] . ' List',
+                'items_list_navigation' => $options['plural_name'] . ' Items List Navigation',
+                'filter_items_list'     => 'Filter' . $options['plural_name'] . ' List',
+                'label'                 => $options['singular_name'],
+                'description'           => $options['plural_name'] . 'Custom Post Type',
+                'supports'              => array('title', 'editor', 'thumbnail'),
+                'taxonomies'            => array('category', 'post_tag'),
+                'hierarchical'          => false,
+                'public'                => $options['public'],
+                'show_ui'               => true,
+                'show_in_menu'          => true,
+                'menu_position'         => 5,
+                'show_in_admin_bar'     => true,
+                'show_in_nav_menus'     => true,
+                'can_export'            => true,
+                'has_archive'           => $options['has_archive'],
+                'exclude_from_search'   => false,
+                'publicly_queryable'    => true,
+                'capability_type'       => 'post'
+            );
+        //}
     }
 
     public function register_custom_post_types()
     {
 
         foreach ($this->custom_post_types as $post_type) {
+
             register_post_type( $post_type['post_type'],
 				array(
 					'labels' => array(
