@@ -13,12 +13,14 @@ class activate
     {
         flush_rewrite_rules();
 
-        if (get_option('leoadd_plugin')) {
-            return;
-        }
-
         $fefault = array();
 
-        update_option('leoadd_plugin', $fefault);
+        if (!get_option('leoadd_plugin')) {
+            update_option('leoadd_plugin', $fefault);
+        }
+
+        if (!get_option('leoadd_plugin_cpt')) {
+            update_option('leoadd_plugin_cpt', $fefault);
+        }
     }
 }
