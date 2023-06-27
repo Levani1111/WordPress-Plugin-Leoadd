@@ -15,10 +15,15 @@ class cptcallbacks
         echo 'Manage your Custom Post Types';
     }
 
-    public function cpt_sanitize( $input )
+    public function cpt_sanitize($input)
     {
-
         $output = get_option('leoadd_plugin_cpt');
+
+        if (isset($_POST['remove'])) {
+            unset($output[$_POST['remove']]);
+            return $output;
+        }
+
 
         if (count($output) == 0) {
             $output[$input['post_type']] = $input;
@@ -32,21 +37,21 @@ class cptcallbacks
                 $output[$input['post_type']] = $input;
             }
         }
-        
+
         return $output;
     }
 
-    public function text_field( $args )
+    public function text_field($args)
     {
         $name = $args['label_for'];
         $option_name = $args['option_name'];
         $input = get_option($option_name);
-    
+
         echo '<input type="text" class="regular-text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="" placeholder="' . $args['placeholder'] . '" required="required">';
     }
-    
 
-    public function checkbox_field( $args )
+
+    public function checkbox_field($args)
     {
         $name = $args['label_for'];
         $classes = $args['class'];
