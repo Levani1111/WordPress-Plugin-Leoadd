@@ -1,4 +1,9 @@
+import 'code-prettify';
+
 window.addEventListener("load", function() {
+
+	PR.prettyPrint();
+
 	// Move your existing code inside this function
 	var tabs = document.querySelectorAll("ul.nav-tabs > li");
   
