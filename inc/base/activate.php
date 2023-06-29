@@ -22,5 +22,9 @@ class activate
         if (!get_option('leoadd_plugin_cpt')) {
             update_option('leoadd_plugin_cpt', $fefault);
         }
+
+        if (!get_option('leoadd_plugin_tax')) {
+            update_option('leoadd_plugin_tax', $fefault);
+        }
     }
 }
