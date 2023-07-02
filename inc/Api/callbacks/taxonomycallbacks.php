@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package Leoadd
+ * @package Leoadd 
  */
 
 namespace Inc\Api\callbacks;
@@ -69,5 +69,33 @@ class taxonomycallbacks
         }
 
         echo '<div class="' . $classes . '"><input type="checkbox" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="1" class="" ' . ($checked ? 'checked' : '') . '><label for="' . $name . '"><div></div></label></div>';
+    }
+
+    public function checkbox_post_types_field($args)
+    {
+        $output = '';
+
+        $name = $args['label_for'];
+        $classes = $args['class'];
+        $option_name = $args['option_name'];
+        $checked = false;
+
+
+        if (isset($_POST['edit_taxonomy'])) {
+            $checkbox = get_option($option_name);
+        }
+
+        $post_types = get_post_types(array('show_ui' => true));
+
+        foreach ($post_types as $post) {
+
+            if (isset($_POST["edit_taxonomy"])) {
+                $checked = isset($checkbox[$_POST["edit_taxonomy"]][$name][$post]) ?: false;
+            }
+
+            $output .= '<div class="' . $classes . ' mb-10"><input type="checkbox" id="' . $post . '" name="' . $option_name . '[' . $name . '][' . $post . ']" value="1" class="" ' . ($checked ? 'checked' : '') . '><label for="' . $post . '"><div></div></label> <strong>' . $post . '</strong></div>';
+        }
+
+        echo $output;
     }
 }

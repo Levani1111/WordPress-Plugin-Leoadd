@@ -133,6 +133,19 @@ class customtaxonomycontroller extends basecontroller
                     'class' => 'ui-toggle',
                     'array' => 'taxonomy'
                 )
+            ),
+            array(
+                'id' => 'objects',
+                'title' => 'Post Types',
+                'callback' => array($this->tax_callbacks, 'checkbox_post_types_field'),
+                'page' => 'leoadd_taxonomy',
+                'section' => 'leoadd_tax_index',
+                'args' => array(
+                    'option_name' => 'leoadd_plugin_tax',
+                    'label_for' => 'objects',
+                    'class' => 'ui-toggle',
+                    'array' => 'taxonomy'
+                )
             )
         );
 
@@ -141,7 +154,6 @@ class customtaxonomycontroller extends basecontroller
 
     public function store_custom_taxonomies()
     {
-        // store all custom taxonomies in a variable
         $options = get_option('leoadd_plugin_tax') ?: array();
 
         foreach ($options as $option) {
@@ -166,6 +178,8 @@ class customtaxonomycontroller extends basecontroller
                 'show_admin_column' => true,
                 'query_var'         => true,
                 'rewrite'           => array('slug' => $option['taxonomy']),
+                'objects'           => isset($option['objects']) ? $option['objects'] : null,
+
             );
         }
     }
@@ -173,7 +187,8 @@ class customtaxonomycontroller extends basecontroller
     public function register_custom_taxonomies()
     {
         foreach ($this->taxonomies as $taxonomy) {
-            register_taxonomy($taxonomy['rewrite']['slug'], array('post'), $taxonomy);
+            $objects = isset($taxonomy['objects']) ? array_keys($taxonomy['objects']) : null;
+			register_taxonomy( $taxonomy['rewrite']['slug'], $objects, $taxonomy );
         }
     }
 }

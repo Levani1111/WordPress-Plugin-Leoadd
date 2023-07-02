@@ -68,4 +68,8 @@ $off: #8c8c8c;
 
 div.ui-toggle {
     @include ui-toggle(15px, $on, $off);
+
+    &.mb-10 {
+        margin-bottom: 10px;
+    }
 }
