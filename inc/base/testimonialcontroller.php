@@ -11,8 +11,8 @@ use \Inc\base\basecontroller;
 use \Inc\Api\callbacks\admincallbacks;
 
 /**
-* 
-*/
+ * 
+ */
 class testimonialcontroller extends basecontroller
 {
 
@@ -21,31 +21,29 @@ class testimonialcontroller extends basecontroller
 
     public $subpages = array();
 
-	public function register()
-	{
-		if ( ! $this->activated( 'testimonial_manager' ) ) return;
-
-		$this->settings = new settingsapi();
-
-        $this->callbacks = new admincallbacks();
-
-        $this->set_subpages();
-
-        $this->settings->add_sub_pages($this->subpages)->register();
-
-	}
-
-    public function set_subpages()
+    public function register()
     {
-        $this->subpages = array(
-            array(
-                'parent_slug' => 'leoadd_plugin',
-                'page_title' => 'Testimonial Manager',
-                'menu_title' => 'Testimonial Manager',
-                'capability' => 'manage_options',
-                'menu_slug' => 'leoadd_testimonial',
-                'callback' => array($this->callbacks, 'admin_testimonial'),
-            )
+        if (!$this->activated('testimonial_manager')) return;
+
+        add_action('init', array($this, 'testimonial_cpt'));
+    }
+
+    public function testimonial_cpt()
+    {
+        $labels = array(
+            'name' => 'Testimonials',
+            'singular_name' => 'Testimonial'
         );
+
+        $args = array(
+            'labels' => $labels,
+            'public' => true,
+            'has_archive' => false,
+            'menu_icon' => 'dashicons-testimonial',
+            'exclude_from_search' => true,
+            'publicly_queryable' => false,
+            'supports' => array('title', 'editor')
+        );
+        register_post_type('testimonial', $args);
     }
 }
