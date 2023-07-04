@@ -8,7 +8,8 @@ namespace Inc\base;
 
 use \Inc\Api\settingsapi;
 use \Inc\base\basecontroller;
-use \Inc\Api\callbacks\admincallbacks;
+use \Inc\Api\callbacks\testimonialcallbacks;
+
 
 /**
  * 
@@ -16,14 +17,16 @@ use \Inc\Api\callbacks\admincallbacks;
 class testimonialcontroller extends basecontroller
 {
 
-    
+    public $settings;
     public $callbacks;
 
-    public $subpages = array();
 
     public function register()
     {
         if (!$this->activated('testimonial_manager')) return;
+
+        $this->settings = new SettingsApi();
+        $this->callbacks = new testimonialcallbacks();
 
         add_action('init', array($this, 'testimonial_cpt'));
         add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
@@ -31,7 +34,25 @@ class testimonialcontroller extends basecontroller
         add_action( 'manage_testimonial_posts_columns', array( $this, 'set_custom_columns' ) );
 		add_action( 'manage_testimonial_posts_custom_column', array( $this, 'set_custom_columns_data' ), 10, 2 );
         add_filter( 'manage_edit-testimonial_sortable_columns', array( $this, 'set_custom_columns_sortable' ) );
+
+        $this->setShortcodePage();
     }
+
+    public function setShortcodePage()
+	{
+		$subpage = array(
+			array(
+				'parent_slug' => 'edit.php?post_type=testimonial',
+				'page_title' => 'Shortcodes',
+				'menu_title' => 'Shortcodes',
+				'capability' => 'manage_options',
+				'menu_slug' => 'leoadd_testimonial_shortcode',
+				'callback' => array( $this->callbacks, 'shortcodePage' )
+			)
+		);
+
+		$this->settings->add_sub_pages( $subpage )->register();
+	}
 
     public function testimonial_cpt()
     {
