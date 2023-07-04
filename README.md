@@ -21,3 +21,6 @@ full list of  sections and features.
 - install composer and run `composer install`.
 - install npm and run `npm install`.
 - run `gulp watch` to compile sass and js files and watch for changes.
+- run `gulp build` to compile sass and js files.
+- run `gulp styles` to compile sass files.
+- run `gulp js` to compile js files.
