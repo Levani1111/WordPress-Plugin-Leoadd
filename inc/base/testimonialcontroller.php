@@ -36,7 +36,9 @@ class testimonialcontroller extends basecontroller
         add_filter( 'manage_edit-testimonial_sortable_columns', array( $this, 'set_custom_columns_sortable' ) );
 
         $this->setShortcodePage();
+
         add_shortcode( 'testimonial-form', array( $this, 'testimonial_form' ) );
+		add_shortcode( 'testimonial-slideshow', array( $this, 'testimonial_slideshow' ) );
 		add_action( 'wp_ajax_submit_testmionial', array( $this, 'submit_testmionial' ) );
 		add_action( 'wp_ajax_nopriv_submit_testmionial', array( $this, 'submit_testmionial' ) );
     }
@@ -94,6 +96,15 @@ class testimonialcontroller extends basecontroller
         echo "<link rel=\"stylesheet\" href=\"$this->plugin_url/assets/form.css\" type=\"text/css\" media=\"all\" />";
 		require_once( "$this->plugin_path/templates/contact-form.php" );
 		echo "<script src=\"$this->plugin_url/assets/form.js\"></script>";
+		return ob_get_clean();
+	}
+
+	public function testimonial_slideshow()
+	{
+		ob_start();
+		echo "<link rel=\"stylesheet\" href=\"$this->plugin_url/assets/slider.css\" type=\"text/css\" media=\"all\" />";
+		require_once( "$this->plugin_path/templates/slider.php" );
+		echo "<script src=\"$this->plugin_url/assets/slider.js\"></script>";
 		return ob_get_clean();
 	}
 
