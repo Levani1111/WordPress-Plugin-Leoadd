@@ -2,7 +2,7 @@
 
     <div class="field-container">
 		<input type="text" class="field-input" placeholder="Your Name" id="name" name="name" required>
-		<small class="field-msg error">Your Name is Required</small>
+		<small class="field-msg error" data-error="invalidName">Your Name is Required</small>
 	</div>
 
 	<div class="field-container">
@@ -13,7 +13,7 @@
 
 	<div class="field-container">
 		<textarea name="message" id="message" class="field-input" placeholder="Your Message" required></textarea>
-		<small class="field-msg error">A Message is Required</small>
+		<small class="field-msg error" data-error="invalidMessage">A Message is Required</small>
 	</div>
 	
 	<div class="field-container">
@@ -24,5 +24,8 @@
 		<small class="field-msg success js-form-success">Message Successfully submitted, thank you!</small>
 		<small class="field-msg error js-form-error">There was a problem with the Contact Form, please try again!</small>
 	</div>
+
+	<input type="hidden" name="action" value="submit_testmionial">
+	<input type="hidden" name="nonce" value="<?php echo wp_create_nonce('testimonial-nonce'); ?>">
 
 </form>
