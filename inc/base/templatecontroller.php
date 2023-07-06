@@ -6,45 +6,64 @@
 
 namespace Inc\base;
 
-use \Inc\Api\settingsapi;
-use \Inc\base\basecontroller;
-use \Inc\Api\callbacks\admincallbacks;
 
-/**
-* 
-*/
+use \Inc\base\basecontroller;
+
+
+
 class templatecontroller extends basecontroller
 {
 
-    public $settings;
-    public $callbacks;
+    public $templates;
 
-    public $subpages = array();
+    public function register()
+    {
+        if (!$this->activated('templates_manager')) return;
 
-	public function register()
-	{
-		if ( ! $this->activated( 'templates_manager' ) ) return;
-
-		$this->settings = new settingsapi();
-
-        $this->callbacks = new admincallbacks();
-
-        $this->set_subpages();
-
-        $this->settings->add_sub_pages($this->subpages)->register();
-
-	}
-
-    public function set_subpages() {
-        $this->subpages = array(
-            array(
-                'parent_slug' => 'leoadd_plugin',
-                'page_title' => 'Template Manager',
-                'menu_title' => 'Template Manager',
-                'capability' => 'manage_options',
-                'menu_slug' => 'leoadd_template',
-                'callback' => array($this->callbacks, 'admin_template'),
-            )
+        $this->templates = array(
+            'page-templates/two-columns-tpl.php' => 'Two Columns Layout'
         );
+
+        add_filter('theme_page_templates', array($this, 'custom_template'));
+        add_filter('template_include', array($this, 'load_template'));
+    }
+
+    public function custom_template($templates)
+    {
+        $templates = array_merge($templates, $this->templates);
+
+        return $templates;
+    }
+
+    public function load_template($template)
+    {
+        global $post;
+
+        if (!$post) {
+            return $template;
+        }
+
+        // If is the front page, load a custom template
+        if (is_front_page()) {
+            $file = $this->plugin_path . 'page-templates/front-page.php';
+
+            if (file_exists($file)) {
+                return $file;
+            }
+        }
+
+        $template_name = get_post_meta($post->ID, '_wp_page_template', true);
+
+        if (!isset($this->templates[$template_name])) {
+            return $template;
+        }
+
+        $file = $this->plugin_path . $template_name;
+
+        if (file_exists($file)) {
+            return $file;
+        }
+
+        return $template;
     }
 }
