@@ -37,8 +37,6 @@ class customposttypecontroller extends basecontroller
 
         $this->set_subpages();
 
-        // $this->settings->add_sub_pages($this->subpages)->register();
-
         $this->set_settings();
         $this->set_sections();
         $this->set_fields();
@@ -204,6 +202,7 @@ class customposttypecontroller extends basecontroller
                 'label'                 => $option['singular_name'],
                 'description'           => $option['plural_name'] . 'Custom Post Type',
                 'supports'              => array('title', 'editor', 'thumbnail'),
+                'show_in_rest'          => true,
                 'taxonomies'            => array('category', 'post_tag'),
                 'hierarchical'          => false,
                 'public'                => isset($option['public']) ?: false,
@@ -260,6 +259,7 @@ class customposttypecontroller extends basecontroller
 					'label'                     => $post_type['label'],
 					'description'               => $post_type['description'],
 					'supports'                  => $post_type['supports'],
+                    'show_in_rest'              => $post_type['show_in_rest'],
 					'taxonomies'                => $post_type['taxonomies'],
 					'hierarchical'              => $post_type['hierarchical'],
 					'public'                    => $post_type['public'],
