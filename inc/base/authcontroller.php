@@ -6,46 +6,40 @@
 
 namespace Inc\base;
 
-use \Inc\Api\settingsapi;
-use \Inc\base\basecontroller;
-use \Inc\Api\callbacks\admincallbacks;
 
-/**
-* 
-*/
+use \Inc\base\basecontroller;
+
+
 class authcontroller extends basecontroller
 {
 
-    public $settings;
-    public $callbacks;
-
-    public $subpages = array();
 
 	public function register()
 	{
 		if ( ! $this->activated( 'login_manager' ) ) return;
 
-		$this->settings = new settingsapi();
-
-        $this->callbacks = new admincallbacks();
-
-        $this->set_subpages();
-
-        $this->settings->add_sub_pages($this->subpages)->register();
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		add_action( 'wp_head', array( $this, 'add_auth_template' ) );
 
 	}
 
-	public function set_subpages()
-    {
-        $this->subpages = array(
-            array(
-                'parent_slug' => 'leoadd_plugin',
-                'page_title' => 'Auth Manager',
-                'menu_title' => 'Auth Manager',
-                'capability' => 'manage_options',
-                'menu_slug' => 'leoadd_auth',
-                'callback' => array($this->callbacks, 'admin_auth'),
-            )
-        );
-    }
+    public function enqueue()
+	{
+
+        if ( is_user_logged_in() ) return;
+        
+		wp_enqueue_style( 'authstyle', $this->plugin_url . 'assets/auth.css' );
+		wp_enqueue_script( 'authscript', $this->plugin_url . 'assets/auth.js' );
+	}
+
+    public function add_auth_template()
+	{
+		if ( is_user_logged_in() ) return;
+
+		$file = $this->plugin_path . 'templates/auth.php';
+
+		if ( file_exists( $file ) ) {
+			load_template( $file, true );
+		}
+	}
 }
